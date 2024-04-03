@@ -1,0 +1,25 @@
+{
+  "name": "bf1942",
+  "displayName": "bf1942",
+  "description": "Provides syntax highlighting in Battlefield 1942 con files.",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.87.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "bf1942",
+      "aliases": ["Battlefield 1942", "bf1942"],
+      "extensions": [".con"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "bf1942",
+      "scopeName": "source.con",
+      "path": "./syntaxes/bf1942.tmLanguage.json"
+    }]
+  }
+}
