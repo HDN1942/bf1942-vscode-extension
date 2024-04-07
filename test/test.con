@@ -1,0 +1,55 @@
+Var v_mode
+Var v_playmode
+
+game.gameMode -> v_mode
+game.gamePlayMode -> v_playmode
+
+echo False -> v_is_coop
+
+if v_mode == GMSingle
+	echo True -> v_is_coop
+endIf
+
+if v_playmode == GPM_COOP
+	echo True -> v_is_coop
+endIf
+
+rem *** Boat Behaviour setup ***
+aiSettings.setVehicleBehaviour Boat		Avoid		BBAvoid			BBPAvoidCollision2d		1 0 UCUnion AvoidInhibit
+aiSettings.setVehicleBehaviour Boat		MoveTo		BBMoveTo		BBPGotoWaypoint2d		4 0 UCUnion BoatWeights
+aiSettings.setVehicleBehaviour Boat		Idle		BBIdle			BBPIdle2d			5 0 UCUnion BoatWeights
+aiSettings.setVehicleBehaviour Boat		Fire		BBFireLargeBore		BBPFire2d			4 0 UCFire  BoatWeights
+aiSettings.setVehicleBehaviour Boat		Scout		BBScout			BBPScout			8 0 UCUnion BoatWeights
+aiSettings.setVehicleBehaviour Boat		Change		BBChangeTeleport	BBPChangeTeleport		6 0 UCUnion ChangeInhibit
+aiSettings.setVehicleDefaultBehaviour Boat             Idle
+
+MaterialManager.attGroup 28
+MaterialManager.defGroup 28
+MaterialManager.damageMod 0.1
+MaterialManager.setEffectTemplate e_collision_metal
+
+rem *** radarbunker ***
+Object.create radarbunker
+Object.absolutePosition 1616.39/56.4184/1365.35
+
+beginrem
+
+this is a comment block
+
+endRem
+
+run Init/Menu
+run globalSpawnGroups
+
+run AIPathFinding.con
+run AI/StrategicAreas.con
+run damage_system/556
+run damage_system/M-1974
+
+Object.create 2ndline_spawnpoint_2
+Object.absolutePosition 1520.51/39.1378/1111.72
+Object.rotation -167.469/0/8.96462e-006
+
+spawnPointManager.groupIcon test2.tga
+
+game.setCustomGameUrl "http://www.fhmod.org"

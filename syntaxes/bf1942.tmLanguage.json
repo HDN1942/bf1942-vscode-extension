@@ -6,24 +6,123 @@
 			"include": "#keywords"
 		},
 		{
+			"include": "#comments"
+		},
+		{
 			"include": "#strings"
+		},
+		{
+			"include": "#operators"
+		},
+		{
+			"include": "#variables"
+		},
+		{
+			"include": "#constants"
+		},
+		{
+			"include": "#commands"
 		}
 	],
 	"repository": {
 		"keywords": {
-			"patterns": [{
-				"name": "keyword.control.bf1942",
-				"match": "\\b(if|while|for|return)\\b"
-			}]
+			"patterns": [
+				{
+					"name": "keyword.control.bf1942",
+					"match": "\\b(?i:if|else|endif|while|for|return)\\b"
+				},
+				{
+					"name": "keyword.other.echo.bf1942",
+					"match": "(?i:echo)"
+				},
+				{
+					"name": "keyword.other.run.bf1942",
+					"match": "(?i:run)"
+				},
+				{
+					"name": "storage.type.var.bf1942",
+					"match": "(?i:var)"
+				}
+			]
+		},
+		"comments": {
+			"patterns": [
+				{
+					"name": "comment.line.rem.bf1942",
+					"begin": "(?<=^|\\s)(?i)(rem).*$",
+					"end": "(?=$\\n)"
+				},
+				{
+					"name": "comment.block.bf1942",
+					"begin": "(?i:beginrem)",
+					"end": "(?i:endrem)"
+				}
+			]
 		},
 		"strings": {
 			"name": "string.quoted.double.bf1942",
 			"begin": "\"",
-			"end": "\"",
+			"end": "\""
+		},
+		"operators": {
 			"patterns": [
 				{
-					"name": "constant.character.escape.bf1942",
-					"match": "\\\\."
+					"match": "==|!=|<|<=|>|>=",
+					"name": "keyword.operator.comparison.bf1942"
+				},
+				{
+					"match": "->",
+					"name": "keyword.operator.assignment.bf1942"
+				}
+			]
+		},
+		"variables": {
+			"patterns": [
+				{
+					"name": "variable.other.readwrite.bf1942",
+					"begin": "\\b(?i:v_[a-z0-9]+)",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.variable.bf1942"
+						}
+					},
+					"end": "\\b"
+				}
+			]
+		},
+		"constants": {
+			"patterns": [
+				{
+					"name": "constant.language.boolean.true.bf1942",
+					"match": "\\b(?i:true)\\b"
+				},
+				{
+					"name": "constant.language.boolean.false.bf1942",
+					"match": "\\b(?i:false)\\b"
+				},
+				{
+					"match": "(?<!\\w)-?\\d+(?:\\.\\d+(?:e-\\d+)?)?\\b",
+					"captures": {
+						"0": {
+							"name": "constant.numeric.number.cs"
+						}
+					}
+				}
+			]
+		},
+		"commands": {
+			"patterns": [
+				{
+					"match": "^(?i)([a-z][a-z0-9]*)\\.([a-z][a-z0-9]*)",
+					"name": "meta.support.other.call.bf1942",
+					"captures": {
+						"1": {
+							"name": "support.class.object.bf1942"
+						},
+						"2": {
+							"name": "support.function.method.bf1942"
+						}
+					}
 				}
 			]
 		}
