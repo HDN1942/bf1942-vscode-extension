@@ -3,47 +3,231 @@
 	"name": "Battlefield 1942",
 	"patterns": [
 		{
-			"include": "#keywords"
-		},
-		{
 			"include": "#comments"
 		},
 		{
-			"include": "#strings"
+			"include": "#declaration"
 		},
 		{
-			"include": "#operators"
-		},
-		{
-			"include": "#variables"
-		},
-		{
-			"include": "#constants"
-		},
-		{
-			"include": "#commands"
+			"include": "#statement"
 		}
 	],
 	"repository": {
-		"keywords": {
+		"declaration": {
 			"patterns": [
 				{
-					"name": "keyword.control.bf1942",
-					"match": "\\b(?i:if|else|endif|while|for|return)\\b"
-				},
-				{
-					"name": "keyword.other.echo.bf1942",
-					"match": "(?i:echo)"
-				},
-				{
-					"name": "keyword.other.run.bf1942",
-					"match": "(?i:run)"
-				},
-				{
-					"name": "storage.type.var.bf1942",
-					"match": "(?i:var)"
+					"include": "#variable-declaration"
 				}
 			]
+		},
+		"statement": {
+			"patterns": [
+				{
+					"include": "#echo-variable-assignment"
+				},
+				{
+					"include": "#if-statement"
+				},
+				{
+					"include": "#else-part"
+				},
+				{
+					"include": "#endif-part"
+				},
+				{
+					"include": "#method-call"
+				},
+				{
+					"include": "#run-script"
+				}
+			]
+		},
+		"variable-declaration": {
+			"name": "meta.variable.declaration.bf1942",
+			"begin": "(?i)^\\s*(var)\\s+",
+			"beginCaptures": {
+				"1": {
+					"name": "storage.type.var.bf1942"
+				}
+			},
+			"end": "(?=$\\n)",
+			"patterns": [
+				{
+					"include": "#variable"
+				}
+			]
+		},
+		"echo-variable-assignment": {
+			"name": "meta.variable.echo.assignment.bf1942",
+			"begin": "(?i)^\\s*(echo)(?=.*\\s+->)",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.other.echo.bf1942"
+				}
+			},
+			"end": "(?=$\\n)",
+			"patterns": [
+				{
+					"include": "#constant"
+				},
+				{
+					"include": "#variable-assignment"
+				}
+			]
+		},
+		"if-statement": {
+			"name": "meta.control.if.bf1942",
+			"begin": "(?i)^\\s*(if)",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.control.if.bf1942"
+				}
+			},
+			"end": "(?=$\\n)",
+			"patterns": [
+				{
+					"include": "#variable"
+				},
+				{
+					"include": "#string"
+				},
+				{
+					"include": "#constant"
+				},
+				{
+					"include": "#identifier"
+				},
+				{
+					"include": "#operator"
+				}
+			]
+		},
+		"else-part": {
+			"match": "(?i)^\\s*(else)\\s*$",
+			"captures": {
+				"1": {
+					"name": "keyword.control.else.bf1942"
+				}
+			}
+		},
+		"endif-part": {
+			"match": "(?i)^\\s*(endif)\\s*$",
+			"captures": {
+				"1": {
+					"name": "keyword.control.endif.bf1942"
+				}
+			}
+		},
+		"method-call": {
+			"name": "meta.method.call.bf1942",
+			"begin": "^\\s*(\\w+)\\.(\\w+)",
+			"beginCaptures": {
+				"1": {
+					"name": "support.class.object.bf1942"
+				},
+				"2": {
+					"name": "support.function.method.bf1942"
+				}
+			},
+			"end": "(?=$\\n)",
+			"patterns": [
+				{
+					"include": "#argument-list"
+				}
+			]
+		},
+		"run-script": {
+			"name": "meta.script.run.bf1942",
+			"begin": "(?i)^\\s*(run)\\s+([\\w/.\\-]+)",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.other.run.bf1942"
+				},
+				"2": {
+					"name": "constant.other.path.bf1942"
+				}
+			},
+			"end": "(?=$\\n)",
+			"patterns": [
+				{
+					"include": "#argument-list"
+				}
+			]
+		},
+		"argument-list": {
+			"patterns": [
+				{
+					"include": "#variable-assignment"
+				},
+				{
+					"include": "#string"
+				},
+				{
+					"include": "#variable"
+				},
+				{
+					"include": "#constant"
+				},
+				{
+					"include": "#identifier"
+				}
+			]
+		},
+		"variable-assignment": {
+			"name": "meta.variable.assignment.bf1942",
+			"begin": "\\s+(->)\\s+",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.operator.assignment.bf1942"
+				}
+			},
+			"end": "(?=$\\n)",
+			"patterns": [
+				{
+					"include": "#variable"
+				}
+			]
+		},
+		"operator": {
+			"name": "keyword.operator.comparison.bf1942",
+			"match": "==|!=|<|<=|>|>="
+		},
+		"variable": {
+			"name": "variable.other.readwrite.bf1942",
+			"match": "(?i)v_\\w+"
+		},
+		"string": {
+			"name": "string.quoted.double.bf1942",
+			"begin": "\"",
+			"end": "\""
+		},
+		"constant": {
+			"patterns": [
+				{
+					"name": "constant.language.boolean.true.bf1942",
+					"match": "(?i)true"
+				},
+				{
+					"name": "constant.language.boolean.false.bf1942",
+					"match": "(?i)false"
+				},
+				{
+					"match": "(?<!\\w)-?\\d+(?:\\.\\d+(?:e-\\d+)?)?\\b",
+					"captures": {
+						"0": {
+							"name": "constant.numeric.number.bf1942"
+						}
+					}
+				}
+			]
+		},
+		"identifier": {
+			"name": "constant.other.identifier.bf1942",
+			"match": "\\b\\w+(?=[^/.\\-])\\b"
+		},
+		"path": {
+			"name": "constant.other.path.bf1942",
+			"match": "[\\w/.\\-]+"
 		},
 		"comments": {
 			"patterns": [
@@ -56,73 +240,6 @@
 					"name": "comment.block.bf1942",
 					"begin": "(?i:beginrem)",
 					"end": "(?i:endrem)"
-				}
-			]
-		},
-		"strings": {
-			"name": "string.quoted.double.bf1942",
-			"begin": "\"",
-			"end": "\""
-		},
-		"operators": {
-			"patterns": [
-				{
-					"match": "==|!=|<|<=|>|>=",
-					"name": "keyword.operator.comparison.bf1942"
-				},
-				{
-					"match": "->",
-					"name": "keyword.operator.assignment.bf1942"
-				}
-			]
-		},
-		"variables": {
-			"patterns": [
-				{
-					"name": "variable.other.readwrite.bf1942",
-					"begin": "\\b(?i:v_[a-z0-9]+)",
-					"beginCaptures": {
-						"0": {
-							"name": "punctuation.definition.variable.bf1942"
-						}
-					},
-					"end": "\\b"
-				}
-			]
-		},
-		"constants": {
-			"patterns": [
-				{
-					"name": "constant.language.boolean.true.bf1942",
-					"match": "\\b(?i:true)\\b"
-				},
-				{
-					"name": "constant.language.boolean.false.bf1942",
-					"match": "\\b(?i:false)\\b"
-				},
-				{
-					"match": "(?<!\\w)-?\\d+(?:\\.\\d+(?:e-\\d+)?)?\\b",
-					"captures": {
-						"0": {
-							"name": "constant.numeric.number.cs"
-						}
-					}
-				}
-			]
-		},
-		"commands": {
-			"patterns": [
-				{
-					"match": "^(?i)([a-z][a-z0-9]*)\\.([a-z][a-z0-9]*)",
-					"name": "meta.support.other.call.bf1942",
-					"captures": {
-						"1": {
-							"name": "support.class.object.bf1942"
-						},
-						"2": {
-							"name": "support.function.method.bf1942"
-						}
-					}
 				}
 			]
 		}

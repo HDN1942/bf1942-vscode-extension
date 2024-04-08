@@ -6,12 +6,14 @@ game.gamePlayMode -> v_playmode
 
 echo False -> v_is_coop
 
-if v_mode == GMSingle
+If v_mode == GMSingle
 	echo True -> v_is_coop
-endIf
+ endIf
 
 if v_playmode == GPM_COOP
 	echo True -> v_is_coop
+  else
+
 endIf
 
 rem *** Boat Behaviour setup ***
@@ -53,3 +55,7 @@ Object.rotation -167.469/0/8.96462e-006
 spawnPointManager.groupIcon test2.tga
 
 game.setCustomGameUrl "http://www.fhmod.org"
+
+ObjectTemplate.createSkeleton animations/Breda.ske
+
+run ai/spawnTankPos 2 5 1860/100/2060
