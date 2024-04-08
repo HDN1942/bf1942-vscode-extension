@@ -1,9 +1,5 @@
 # Change Log
 
-All notable changes to the "bf1942" extension will be documented in this file.
-
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
-
-## [Unreleased]
+## [1.0.0] - 2024-04-08
 
 - Initial release

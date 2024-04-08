@@ -2,7 +2,22 @@
   "name": "bf1942",
   "displayName": "bf1942",
   "description": "Provides syntax highlighting in Battlefield 1942 con files.",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "publisher": "hdn1942",
+  "author": {
+      "name": "HDN",
+      "email": "hdn@oporko.com"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/HDN1942/bf1942-vscode-extension/blob/main/README.md",
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/HDN1942/bf1942-vscode-extension"
+  },
+  "icon": "images/icon.png",
+  "bugs": {
+      "url": "https://github.com/HDN1942/bf1942-vscode-extension/issues"
+  },
   "engines": {
     "vscode": "^1.87.0"
   },
